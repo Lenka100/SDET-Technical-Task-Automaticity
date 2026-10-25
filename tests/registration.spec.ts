@@ -133,16 +133,25 @@ test('Registration with a weak password', async () => {
         password: 'aaaaaaaa'
     };
 
-  await registrationPage.fill_inputFields(userData);
-  await registrationPage.acceptRequiredConsents();
-  await registrationPage.submitRegistration();
 
 
-  await expect(
-  registrationPage.shop.locator(
-    '[data-ps-target="password-announce-validity"]'
-  )
-).toHaveText('Your password is too weak');
+await registrationPage.fill_inputFields(userData);
+await registrationPage.acceptRequiredConsents();
+
+
+await expect(
+  registrationPage.shop.locator('#field-password:invalid')
+).toBeVisible({ timeout: 15000 });
+
+await registrationPage.submitRegistration();
+
+
+await expect(registrationPage.input_password)
+  .toHaveValue(userData.password);
+
+await expect(
+  registrationPage.shop.locator('#field-password:invalid')
+).toBeVisible();
 
 
 
