@@ -29,7 +29,7 @@ await registrationPage.acceptRequiredConsents();
 await registrationPage.submitRegistration();
 
 
-//Provera uspesne registracije
+
 await expect(
   registrationPage.shop.locator('#userMenuButton')
 ).toBeVisible();
